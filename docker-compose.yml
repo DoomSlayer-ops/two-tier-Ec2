@@ -5,6 +5,7 @@ services:
     user: "${UID}:${GID}" 
     image: mysql:5.7
     container_name: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: devops
@@ -23,9 +24,6 @@ services:
       start_period: 60s
 
   flask-app:
-    depends_on:
-      mysql:
-        condition: service_healthy
     image: shreemantgit/flask:latest
     container_name: flask-app
     ports:
@@ -36,7 +34,8 @@ services:
       MYSQL_PASSWORD: admin
       MYSQL_DB: devops
     depends_on:
-      - mysql
+      mysql:
+        condition: service_heathly
     networks:
       - two-tier
     restart: always
