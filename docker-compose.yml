@@ -35,7 +35,7 @@ services:
       MYSQL_DB: devops
     depends_on:
       mysql:
-        condition: service_heathly
+        condition: service_healthy
     networks:
       - two-tier
     restart: always
