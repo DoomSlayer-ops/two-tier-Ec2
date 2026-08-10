@@ -16,13 +16,16 @@ services:
     networks:
       - two-tier
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 60s
 
   flask-app:
+    depends_on:
+      mysql:
+        condition: service_healthy
     image: shreemantgit/flask:latest
     container_name: flask-app
     ports:
